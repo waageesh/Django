@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Django NOTES</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+<div id="accordion">
+  <div class="card">
+    <div class="card-header" id="headingOne">
+      <h5 class="mb-0">
+        <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+          Q1) what is WSGI ?
+        </button>
+      </h5>
+    </div>
+
+    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+      <div class="card-body">
+        The Web Server Gateway Interface (WSGI, pronounced whiskey[1][2]) is a simple calling convention for web servers to forward requests to web applications or frameworks written in the Python programming language. The current version of WSGI, version 1.0.1, is specified in Python Enhancement Proposal (PEP) 3333.
+        </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header" id="headingTwo">
+      <h5 class="mb-0">
+        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+          Q2) Why do we need WSGI servers(gunicorn , uWSGI , mod_wsgi) to run Django or any WSGI applications ?
+        </button>
+      </h5>
+    </div>
+    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+      <div class="card-body">
+        Python currently boasts a wide variety of web application frameworks, such as Zope, Quixote, Webware, SkunkWeb, PSO, and Twisted Web -- to name just a few. This wide variety of choices can be a problem for new Python users, because generally speaking, their choice of web framework will limit their choice of usable web servers, and vice versa... By contrast, although Java has just as many web application frameworks available, Java's "servlet" API makes it possible for applications written with any Java web application framework to run in any web server that supports the servlet API.
+        
+        WSGI was thus created as an implementation-agnostic interface between web servers and web applications or frameworks to promote common ground for portable web application development.
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header" id="headingThree">
+      <h5 class="mb-0">
+        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+          Q3) Are all python/Django based applications are WSGI ?
+        </button>
+      </h5>
+    </div>
+    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+      <div class="card-body">
+        Yes,
+        Python web frameworks were typically written against only CGI, FastCGI, mod_python, or some other custom API of a specific web server.
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="accordion">
+  <div class="card">
+    <div class="card-header" id="headingOne">
+      <h5 class="mb-0">
+        <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+          Q4) can't we make/develop Django app as Non-WSGI app ?
+        </button>
+      </h5>
+    </div>
+
+    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+      <div class="card-body">
+        No, to run on web , not possible.
+        But in development server., it's possible using default Development webserver that runs on local machine
+        127.0.0.1 at 8000 port
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header" id="headingTwo">
+      <h5 class="mb-0">
+        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+          Q5) Can't we run "Django backend applications" like "PHP based backend applications" without WSGI server in between server and application ?
+        </button>
+      </h5>
+    </div>
+    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+      <div class="card-body">
+        nope, answer for this question is same as Q2
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header" id="headingThree">
+      <h5 class="mb-0">
+        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+          Q6) Do all servers(Nginx , Apache , Heroku) support WSGI applications?6
+        </button>
+      </h5>
+    </div>
+    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+      <div class="card-body">
+        yes , when they are along with WSGI servers like Gunicorn , uWSGI , mod_WSGI etc., 
+        since normal production webservers like Apache , Nginx don't have necessary API's in Python frameworks to run these WSGI applications
+        so this can be achieved by intermediate WSGI servers.
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="accordion">
+  <div class="card">
+    <div class="card-header" id="headingOne">
+      <h5 class="mb-0">
+        <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+          Q7) what is the flow of Django applications working when it is hosted on server with WSGI server in between ?
+        </button>
+      </h5>
+    </div>
+
+    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+      <div class="card-body">
+        We will deploy/place our code in any FTP server(either provided by the host service or 3rd party FTP tool like FileZilla)
+        When we(or end-user) pass a request through frontend webpage(which is called HTTP Request) to the server(production server like Aoache , Nginx) , this request is further passed to WSGI server , normal server can't make calls from WSGI applications(which is our Django or any python framework based application) then WSGI server taking this HTTP Request from server , calls a function from wsgi.py file in our project.
+        After this function call , when our application returns us, required response, it(WSGI server) sends back to server, which is further passed to our frontend webpage
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header" id="headingTwo">
+      <h5 class="mb-0">
+        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+          Q8)what exactly WSGI server will do when compared to normal server ?
+        </button>
+      </h5>
+    </div>
+    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+      <div class="card-body">
+The WSGI has two sides:
+
+the server/gateway side. This is often a full web server such as Apache or Nginx, or a lightweight application server that can communicate with a webserver, such as flup.
+the application/framework side. This is a Python callable, supplied by the Python program or framework.
+Between the server and the application, there may be one or more WSGI middleware components, which implement both sides of the API, typically in Python code.
+
+WSGI does not specify how the Python interpreter should be started, nor how the application object should be loaded or configured, and different frameworks and webservers achieve this in different ways.
+
+but what WSGI actually do here ?
+https://learnbatta.com/blog/understanding-request-response-lifecycle-in-django-29/
+https://medium.com/zeitcode/django-middlewares-and-the-request-response-cycle-fcbf8efb903f
+WSGI is a tool created to solve a basic problem: connecting a web server to a web framework. WSGI has two sides: the ‘server’ side and the ‘application’ side. To handle a WSGI response, the server executes the application and provides a callback function to the application side. The application processes the request and returns the response to the server using the provided callback. Essentially, the WSGI handler acts as the gatekeeper between your web server (Apache, NGINX, etc) and your Django project.
+Between the server and the application lie the middlewares. You can think of middlewares as a series of bidirectional filters: they can alter (or short-circuit) the data flowing back and forth between the network and your Django application.
+The Big Picture — Data Flow
+When the user makes a request of your application, a WSGI handler is instantiated, which:
+imports your settings.py file and Django’s exception classes.
+loads all the middleware classes it finds in the MIDDLEWARE_CLASSES or MIDDLEWARES(depending on Django version) tuple located in settings.py
+builds four lists of methods which handle processing of request, view, response, and exception.
+loops through the request methods, running them in order
+resolves the requested URL
+loops through each of the view processing methods
+calls the view function (usually rendering a template)
+processes any exception methods
+loops through each of the response methods, (from the inside out, reverse order from request middlewares)
+finally builds a return value and calls the callback function to the web server
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header" id="headingThree">
+      <h5 class="mb-0">
+        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+          Q9) If both webservers(Apache, Nginx) and WSGI are same kind of webservers, why can't we use ony WSGI server for running WSGI Applications?
+        </button>
+      </h5>
+    </div>
+    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+      <div class="card-body">
+        Webserver helps us in serving static files/content. If we did not use the webserver to serve static files then it has to served by WSGI server which results in more number of requests to the server. So, gradually it slow down the application performance. Web server balances the requests load on the server. So, it's highly recommended to use the webserver.
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>
+
+
+
+
+
+
+
